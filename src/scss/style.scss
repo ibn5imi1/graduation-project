@@ -5,17 +5,45 @@
 @import "mixins";
 @import "header";
 @import "footer";
-
+@import "home";
 
 
 // @import "./";
-
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     background-color: $yellow-color;
-    height: 9000px;
     font-family: 'Cairo', sans-serif !important;
 }
 
-/* start header */ 
+html {
+    
+    scrollbar-width: auto;
+    scrollbar-color: $red-color $yellow-color;
 
-/* end header */ 
+    &::-webkit-scrollbar {
+        width: 14px !important;
+        display: block !important;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $yellow-color !important; 
+        border-radius: 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $red-color !important; 
+        border-radius: 20px !important; 
+        border: 3px solid $yellow-color !important; 
+        
+        &:hover {
+            background-color: darken($red-color, 15%) !important; 
+        }
+    }
+}

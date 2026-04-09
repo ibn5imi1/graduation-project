@@ -83,6 +83,10 @@ module.exports = {
         template: "./src/pizza.html"
     }),
     new HtmlWebpackPlugin({
+        filename: "order.html",
+        template: "./src/order.html"
+    }),
+    new HtmlWebpackPlugin({
         filename: "product1.html",
         template: "./src/product1.html"
     }),

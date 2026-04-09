@@ -1,0 +1,26 @@
+Graduation-Project
+:-dist
+:-node_modules
+:-src
+ :-assets
+ :-css
+  :-style.css
+  :-style.css.map
+ :-scss
+  :-_footer.scss
+  :-_variables.scss
+  :-_mixins.scss
+  :-style.scss
+ about.html
+ contactUs.html
+ index.html
+ index.js
+ pizza.html
+ product1.html
+ product2.html
+ product3.html
+.gitignore
+map
+package-lock.json
+package.json
+webpack.config.js

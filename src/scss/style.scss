@@ -1,3 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+
+
+@import "variables";
+@import "mixins";
+@import "header";
+@import "footer";
+
+
+
+// @import "./";
+
 body {
-    background-color: red;
+    background-color: $yellow-color;
+    height: 9000px;
+    font-family: 'Cairo', sans-serif !important;
 }
+
+/* start header */ 
+
+/* end header */ 

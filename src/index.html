@@ -7,9 +7,11 @@
   </head>
   <body>
     <!-- start header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html">بيتزا دي روما</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -21,61 +23,86 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 p-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+              <a class="nav-link active" aria-current="page" href="index.html"
+                >الرئيسية</a
               >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Disabled</a
-              >
+              <a class="nav-link" href="about.html">حول المطعم</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contactUs.html">اتصل بنا</a>
             </li>
           </ul>
-          <form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          <div class="navbar-logo">
+            <img src="../src/assets/images/logo.png" alt="Logo" />
+          </div>
         </div>
       </div>
     </nav>
     <!-- end header -->
 
     <!-- start footer -->
+    <footer class="main-footer bg-dark text-white pt-5 pb-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <h5 class="footer-title">بيتزا دي روما</h5>
+            <p class="small text-muted"></p>
+            <div class="social-links mt-3">
+              <a href="#" class="social-icon"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-snapchat"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <h5 class="footer-title">روابط تهمك</h5>
+            <ul class="list-unstyled footer-links">
+              <li><a href="about.html">عن المطعم</a></li>
+              <li><a href="index.html">سياسة الخصوصية</a></li>
+              <li><a href="index.html">الوظائف الشاغرة</a></li>
+              <li><a href="contactUs.html">تواصل معنا</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-12 mb-4">
+            <h5 class="footer-title">اشترك في النشرة البريدية</h5>
+            <p class="small">كن أول من يعرف عروضنا الحصرية.</p>
+            <form class="input-group">
+              <input
+                type="email"
+                class="form-control rounded-0"
+                placeholder="بريدك الإلكتروني"
+              />
+              <button class="btn btn-warning rounded-0" type="submit">
+                اشترك
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <hr class="bg-secondary" />
+        <div class="row">
+          <div class="col text-center">
+            <p class="small mb-0">
+              &copy; 2026 جميع الحقوق محفوظة لمطعم بيتزا دي روما
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
     <!-- end footer -->
 
     <script src="index.js"></script>

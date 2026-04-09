@@ -1,5 +1,118 @@
-body {
-  background-color: red;
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+.navbar {
+  padding: 0.5rem 0;
+  min-height: 70px;
 }
+.navbar .nav-item {
+  position: relative;
+  margin: 0 10px;
+}
+.navbar .nav-item .nav-link {
+  color: #333 !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+.navbar .nav-item .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: #ffc107;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+.navbar .nav-item .nav-link:hover {
+  color: #ffc107 !important;
+}
+.navbar .nav-item .nav-link:hover::after {
+  width: 100%;
+}
+.navbar .nav-item .nav-link.active {
+  color: #ffc107 !important;
+}
+.navbar .nav-item .nav-link.active::after {
+  width: 100%;
+}
+.navbar .navbar-logo img {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 991px) {
+  .navbar-logo {
+    display: none;
+  }
+}
+.main-footer {
+  border-top: 5px solid #ffc107;
+}
+.main-footer .footer-title {
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+.main-footer .footer-title::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background-color: #ffc107;
+}
+.main-footer .footer-links li {
+  margin-bottom: 10px;
+}
+.main-footer .footer-links li a {
+  color: #adb5bd;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.main-footer .footer-links li a:hover {
+  color: #ffc107;
+  padding-right: 10px;
+}
+.main-footer .social-links .social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background-color: #333;
+  color: white;
+  border-radius: 50%;
+  margin-left: 10px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+.main-footer .social-links .social-icon:hover {
+  background-color: #ffc107;
+  color: #000;
+  transform: translateY(-3px);
+}
+.main-footer .form-control {
+  background-color: #000;
+  border: 1px solid #444;
+  color: white;
+}
+.main-footer .form-control:focus {
+  background-color: #333;
+  border-color: #ffc107;
+  box-shadow: none;
+}
+
+body {
+  background-color: #ffc107;
+  height: 9000px;
+  font-family: "Cairo", sans-serif !important;
+}
+
+/* start header */
+/* end header */
 
 /*# sourceMappingURL=style.css.map */

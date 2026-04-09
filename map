@@ -8,6 +8,7 @@ Graduation-Project
   :-style.css.map
  :-scss
   :-_footer.scss
+  :-_header.scss
   :-_variables.scss
   :-_mixins.scss
   :-style.scss

@@ -91,18 +91,6 @@ module.exports = {
         filename: "order.html",
         template: "./src/order.html"
     }),
-    new HtmlWebpackPlugin({
-        filename: "product1.html",
-        template: "./src/product1.html"
-    }),
-    new HtmlWebpackPlugin({
-        filename: "product2.html",
-        template: "./src/product2.html"
-    }),
-    new HtmlWebpackPlugin({
-        filename: "product3.html",
-        template: "./src/product3.html"
-    }),
     new MiniCssExtractPlugin({
         filename: "css/style.css"
     }),

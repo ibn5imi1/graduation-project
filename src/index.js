@@ -201,3 +201,86 @@ function sendOrder() {
             }, false)
         })
 })()
+
+// اضافة تعليق و تقييم
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. استخراج البيانات من الرابط (URL Parameters)
+    const urlParams = new URLSearchParams(window.location.search);
+    const pName = urlParams.get("name") || "بيتزا شهية";
+    const pPrice = urlParams.get("price") || "0.00";
+    const pImg = urlParams.get("img");
+
+    const nameDisplay = document.getElementById("display-name");
+    const breadcrumbDisplay = document.getElementById("breadcrumb-name");
+    const priceDisplay = document.getElementById("display-price");
+    const imageDisplay = document.getElementById("display-img");
+
+    if (nameDisplay) nameDisplay.innerText = pName;
+    if (breadcrumbDisplay) breadcrumbDisplay.innerText = pName;
+    if (priceDisplay) priceDisplay.innerText = "$" + pPrice;
+
+    // تحديث الصورة بناءً على مسارات المشروع
+    if (pImg && imageDisplay) {
+        let folder = pImg.startsWith("product") ? "products" : "slide-images";
+        imageDisplay.src = `assets/images/${folder}/${pImg}`;
+    }
+
+    // 2. منطق تقييم النجوم
+    let selectedRating = 0;
+    const stars = document.querySelectorAll("#star-input i");
+
+    stars.forEach((star) => {
+        star.addEventListener("click", () => {
+            selectedRating = star.getAttribute("data-value");
+            updateStarsDisplay(selectedRating);
+        });
+    });
+
+    function updateStarsDisplay(rating) {
+        stars.forEach((s) => {
+            s.classList.toggle("active", s.getAttribute("data-value") <= rating);
+        });
+    }
+
+    // 3. وظيفة نشر التعليق
+    window.postComment = function () {
+        const commentInput = document.getElementById("user-comment");
+        const commentText = commentInput.value;
+        const container = document.getElementById("comments-container");
+
+        if (selectedRating === 0) {
+            alert("يرجى اختيار تقييم بالنجوم أولاً!");
+            return;
+        }
+        if (commentText.trim() === "") {
+            alert("يرجى كتابة تعليق!");
+            return;
+        }
+
+        // حذف رسالة "لا توجد تعليقات" إذا وجدت
+        if (container.querySelector(".text-muted")) {
+            container.innerHTML = "";
+        }
+
+        let starHtml = "";
+        for (let i = 1; i <= 5; i++) {
+            starHtml += `<i class="fa-solid fa-star ${i <= selectedRating ? "text-warning" : "text-secondary"}" style="font-size: 0.8rem;"></i>`;
+        }
+
+        const newComment = `
+            <div class="comment-card shadow-sm mb-3 p-3 bg-white rounded-3 animate__animated animate__fadeIn">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h6 class="fw-bold mb-0">مستخدم جديد</h6>
+                    <div class="stars">${starHtml}</div>
+                </div>
+                <p class="text-muted mb-0 small">${commentText}</p>
+            </div>`;
+
+        container.insertAdjacentHTML("afterbegin", newComment);
+
+        // إعادة تهيئة الحقول
+        commentInput.value = "";
+        selectedRating = 0;
+        updateStarsDisplay(0);
+    };
+});

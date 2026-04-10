@@ -1,38 +1,46 @@
-.about-page {
-  .about-hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                url('../src/assets/images/about/hero-bg.jpg') center/cover;
-    height: 300px;
-  }
+body {
+  background-color: $bg-body;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
-  .about-img-box {
-    .experience-badge {
-      position: absolute;
-      bottom: -20px;
-      right: -20px;
-      background: $yellow-color;
-      color: #000;
-      padding: 15px 25px;
-      border-radius: 12px;
-      font-weight: bold;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+.product-img {
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.star-rating {
+  font-size: 1.5rem;
+  color: #ddd;
+  cursor: pointer;
+  display: inline-block;
+
+  .fa-star {
+    transition: color 0.2s ease;
+    &.active {
+      color: $main-color;
     }
   }
+}
 
-  .feature-card {
-    background: #fff;
-    border: 1px solid #eee;
-    transition: 0.3s;
-    &:hover {
-      transform: translateY(-10px);
-      border-color: $yellow-color;
-    }
-    .icon-box i {
-      color: $yellow-color;
-    }
-  }
+.comment-card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  border-right: 5px solid $main-color;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
 
-  .stats-section {
-    border-top: 5px solid $yellow-color;
+.btn-submit {
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 25px;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: $main-color;
+    color: #333;
   }
 }

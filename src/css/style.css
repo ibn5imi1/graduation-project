@@ -390,6 +390,82 @@
   background-color: rgb(211, 158.25, 0);
 }
 
+body {
+  background-color: #fcfcfc;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.product-img {
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.star-rating {
+  font-size: 1.5rem;
+  color: #ddd;
+  cursor: pointer;
+  display: inline-block;
+}
+.star-rating .fa-star {
+  transition: color 0.2s ease;
+}
+.star-rating .fa-star.active {
+  color: #ffc107;
+}
+
+.comment-card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  border-right: 5px solid #ffc107;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.btn-submit {
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 25px;
+  transition: 0.3s;
+}
+.btn-submit:hover {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.about-page .about-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("../assets/images/products/product-1-1.jpg") center/cover;
+  height: 300px;
+}
+.about-page .about-img-box .experience-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: #ffc107;
+  color: #000;
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.about-page .feature-card {
+  background: #fff;
+  border: 1px solid #eee;
+  transition: 0.3s;
+}
+.about-page .feature-card:hover {
+  transform: translateY(-10px);
+  border-color: #ffc107;
+}
+.about-page .feature-card .icon-box i {
+  color: #ffc107;
+}
+.about-page .stats-section {
+  border-top: 5px solid #ffc107;
+}
+
 * {
   padding: 0;
   margin: 0;

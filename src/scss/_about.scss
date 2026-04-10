@@ -1,0 +1,38 @@
+.about-page {
+  .about-hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                url('../src/assets/images/about/hero-bg.jpg') center/cover;
+    height: 300px;
+  }
+
+  .about-img-box {
+    .experience-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: $yellow-color;
+      color: #000;
+      padding: 15px 25px;
+      border-radius: 12px;
+      font-weight: bold;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+  }
+
+  .feature-card {
+    background: #fff;
+    border: 1px solid #eee;
+    transition: 0.3s;
+    &:hover {
+      transform: translateY(-10px);
+      border-color: $yellow-color;
+    }
+    .icon-box i {
+      color: $yellow-color;
+    }
+  }
+
+  .stats-section {
+    border-top: 5px solid $yellow-color;
+  }
+}

@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-
+const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
 
 module.exports = {
@@ -70,6 +70,11 @@ module.exports = {
         filename: "index.html",
         template: "./src/index.html"
     }),
+        new CopyPlugin({
+            patterns: [
+                { from: "src/assets/images", to: "assets/images" }, // ينسخ الصور لمجلد dist/assets/images
+            ],
+        }),
     new HtmlWebpackPlugin({
         filename: "about.html",
         template: "./src/about.html"
@@ -103,4 +108,5 @@ module.exports = {
     }),
     new CssMinimizerPlugin()
     ],
+    
 };

@@ -1,0 +1,31 @@
+.contact-page {
+  background-color: #f8f9fa;
+
+  .contact-info-card, .contact-form-card {
+    border: none;
+    transition: transform 0.3s ease;
+    
+    h4 {
+      color: #222;
+      font-size: 1.25rem;
+    }
+  }
+
+  .form-control, .form-select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    &:focus {
+      border-color: $yellow-color;
+      box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    }
+  }
+
+  .btn-warning {
+    background-color: $yellow-color;
+    border: none;
+    &:hover {
+      background-color: darken($yellow-color, 10%);
+    }
+  }
+}

@@ -1,8 +1,6 @@
-
 .main-footer {
-
-
   border-top: 5px solid $yellow-color;
+
   .footer-title {
     position: relative;
     padding-bottom: 10px;
@@ -24,7 +22,7 @@
     li {
       margin-bottom: 10px;
       a {
-        color: #adb5bd;
+        color: #adb5;
         text-decoration: none;
         transition: all 0.3s ease;
 
@@ -48,12 +46,12 @@
       border-radius: 50%;
       margin-left: 10px;
       text-decoration: none;
-      transition: background 0.3s ease;
+      
+      @include hover-lift(-3px); 
 
       &:hover {
         background-color: $yellow-color;
         color: $black-color;
-        transform: translateY(-3px);
       }
     }
   }
@@ -70,3 +68,4 @@
     }
   }
 }
+

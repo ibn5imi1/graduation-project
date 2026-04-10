@@ -9,24 +9,24 @@ import "../src/scss/style.scss";
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. تحديد جميع أزرار "اطلب الآن" و "+"
+    // 1. Select all "Order Now" and "+" buttons
     const orderButtons = document.querySelectorAll('.btn-grab, .btn-add-mini');
 
     orderButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
 
-            // 2. الحصول على بيانات المنتج من الـ DOM
-            // نبحث عن أقرب حاوية للمنتج سواء كان في العروض أو المنيو
+            // 2. Retrieving product data from the DOM
+            // We search for the nearest container for the product, whether it's in the offers or the menu.
             const card = button.closest('.offer-card') || button.closest('.menu-item-card');
 
             const productName = card.querySelector('h3, h5').innerText;
             const productPrice = card.querySelector('.new-price, .menu-item-price').innerText;
 
-            // تنظيف السعر من علامة $ وتحويله لرقم
+            // Clean the price from the dollar sign ($) and convert it to a number
             const cleanPrice = parseFloat(productPrice.replace(/[^\d.]/g, ''));
 
-            // 3. إنشاء كائن المنتج
+            // 3. Create the product object
             const product = {
                 name: productName,
                 price: cleanPrice,
@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// وظيفة الحفظ في LocalStorage
+// Save function in LocalStorage
 function addToStorage(product) {
     let cart = JSON.parse(localStorage.getItem('pizzaCart')) || [];
 
-    // التأكد إذا كان المنتج موجود مسبقاً لزيادة العدد فقط
+    // Check if the product is already available to increase the quantity only
     const existingProductIndex = cart.findIndex(item => item.name === product.name);
 
     if (existingProductIndex > -1) {
@@ -55,9 +55,9 @@ function addToStorage(product) {
     localStorage.setItem('pizzaCart', JSON.stringify(cart));
 }
 
-// وظيفة إظهار البوب أب (Toast Notification)
+// Function to display pop-up (Toast Notification)
 function showPopup(name) {
-   // إنشاء عنصر البوب أب 
+    // Create a pop-up element
     const popup = document.createElement('div');
     popup.className = 'order-popup';
     popup.innerHTML = `
@@ -69,7 +69,7 @@ function showPopup(name) {
 
     document.body.appendChild(popup);
 
-    // إخفاء البوب أب بعد 3 ثوانٍ
+    // Hide pop-up after 3 seconds
     setTimeout(() => {
         popup.classList.add('show');
     }, 100);
@@ -80,7 +80,6 @@ function showPopup(name) {
     }, 3000);
 }
 
-// كود يوضع في صفحة "طلبك" فقط
 function displayOrders() {
     const cart = JSON.parse(localStorage.getItem('pizzaCart')) || [];
     const container = document.getElementById('orders-container');
@@ -99,6 +98,7 @@ function displayOrders() {
     `).join('');
 }
 
+// Code to be placed only on the "Your Order" page
 document.addEventListener('DOMContentLoaded', () => {
     displayCart();
 
@@ -147,15 +147,15 @@ function displayCart() {
     grandTotalElement.innerText = totalAll + '$';
 }
 
-// وظيفة حذف منتج واحد
+// Function to delete one product
 window.removeItem = (index) => {
     let cart = JSON.parse(localStorage.getItem('pizzaCart')) || [];
     cart.splice(index, 1);
     localStorage.setItem('pizzaCart', JSON.stringify(cart));
-    displayCart(); // إعادة العرض بعد الحذف
+    displayCart(); 
 };
 
-// وظيفة إرسال الطلب
+// Request Submission Function
 function sendOrder() {
     const phone = document.getElementById('user-phone').value;
     const address = document.getElementById('user-address').value;
@@ -171,15 +171,14 @@ function sendOrder() {
         return;
     }
 
-    // هنا يمكنك إرسال البيانات للسيرفر، سنكتفي حالياً بتنبيه نجاح وتنظيف السلة
+    // Here you can send the data to the server. For now, we will only notify you of success and the emptying of the bin.
     alert(`شكراً لطلبك! سيتم التوصيل إلى: ${address}\nسنتواصل معك على الرقم: ${phone}`);
 
     localStorage.removeItem('pizzaCart');
     window.location.href = 'index.html'; // العودة للرئيسية
 }
 
-
-// تفعيل التحقق من Bootstrap
+// Enable Bootstrap verification
 (function () {
     'use strict'
     const forms = document.querySelectorAll('.needs-validation')
@@ -192,8 +191,7 @@ function sendOrder() {
                     event.stopPropagation()
                 } else {
                     event.preventDefault()
-                    // هنا يمكنك إضافة كود إرسال الرسالة الحقيقي
-                    alert('تم استلام رسالتك بنجاح، سنرد عليك قريباً!')
+                    // Here you can add the code to send the actual message                    alert('تم استلام رسالتك بنجاح، سنرد عليك قريباً!')
                     form.reset()
                     form.classList.remove('was-validated')
                 }
@@ -202,9 +200,10 @@ function sendOrder() {
         })
 })()
 
-// اضافة تعليق و تقييم
+
+// 1. Extracting data from the URL (URL Parameters)
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. استخراج البيانات من الرابط (URL Parameters)
+    // 1. Extracting data from the URL (URL Parameters)
     const urlParams = new URLSearchParams(window.location.search);
     const pName = urlParams.get("name") || "بيتزا شهية";
     const pPrice = urlParams.get("price") || "0.00";
@@ -219,13 +218,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (breadcrumbDisplay) breadcrumbDisplay.innerText = pName;
     if (priceDisplay) priceDisplay.innerText = "$" + pPrice;
 
-    // تحديث الصورة بناءً على مسارات المشروع
+    // Image updated based on project paths
     if (pImg && imageDisplay) {
         let folder = pImg.startsWith("product") ? "products" : "slide-images";
         imageDisplay.src = `assets/images/${folder}/${pImg}`;
     }
 
-    // 2. منطق تقييم النجوم
+    // 2. The logic of star ratings
     let selectedRating = 0;
     const stars = document.querySelectorAll("#star-input i");
 
@@ -242,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. وظيفة نشر التعليق
+    // 3. Comment posting function
     window.postComment = function () {
         const commentInput = document.getElementById("user-comment");
         const commentText = commentInput.value;
@@ -257,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // حذف رسالة "لا توجد تعليقات" إذا وجدت
+        // Delete the "No comments" message if found
         if (container.querySelector(".text-muted")) {
             container.innerHTML = "";
         }
@@ -278,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.insertAdjacentHTML("afterbegin", newComment);
 
-        // إعادة تهيئة الحقول
+        // Reformatting fields
         commentInput.value = "";
         selectedRating = 0;
         updateStarsDisplay(0);

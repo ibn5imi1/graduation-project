@@ -1,6 +1,6 @@
 .about-page {
   .about-hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+    background: linear-gradient(rgba($black-color, 0.6), rgba($black-color, 0.6)), 
                 url('../assets/images/products/product-1-1.jpg') center/cover;
     height: 300px;
   }
@@ -11,22 +11,26 @@
       bottom: -20px;
       right: -20px;
       background: $yellow-color;
-      color: #000;
-      padding: 15px 25px;
-      border-radius: 12px;
+      color: $black-color;
+      
+      @include card-base(12px, 15px 25px);
+      
       font-weight: bold;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 20px rgba($black-color, 0.1);
     }
   }
 
   .feature-card {
-    background: #fff;
+    @include card-base(0, 20px); 
+    background: $white-color;
     border: 1px solid #eee;
-    transition: 0.3s;
+    
+    @include hover-lift(-10px);
+
     &:hover {
-      transform: translateY(-10px);
       border-color: $yellow-color;
     }
+
     .icon-box i {
       color: $yellow-color;
     }

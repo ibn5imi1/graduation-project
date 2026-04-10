@@ -69,7 +69,7 @@
   margin-bottom: 10px;
 }
 .main-footer .footer-links li a {
-  color: #adb5bd;
+  color: rgba(170, 221, 187, 0.3333333333);
   text-decoration: none;
   transition: all 0.3s ease;
 }
@@ -88,12 +88,14 @@
   border-radius: 50%;
   margin-left: 10px;
   text-decoration: none;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+}
+.main-footer .social-links .social-icon:hover {
+  transform: translateY(-3px) scale(1);
 }
 .main-footer .social-links .social-icon:hover {
   background-color: #ffc107;
   color: #000;
-  transform: translateY(-3px);
 }
 .main-footer .form-control {
   background-color: #000;
@@ -363,11 +365,14 @@
 }
 
 .contact-page {
-  background-color: #f8f9fa;
+  background-color: #ffc107;
 }
 .contact-page .contact-info-card, .contact-page .contact-form-card {
   border: none;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+}
+.contact-page .contact-info-card:hover, .contact-page .contact-form-card:hover {
+  transform: translateY(-5px) scale(1);
 }
 .contact-page .contact-info-card h4, .contact-page .contact-form-card h4 {
   color: #222;
@@ -377,14 +382,17 @@
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #ddd;
+  transition: 0.3s;
 }
 .contact-page .form-control:focus, .contact-page .form-select:focus {
   border-color: #ffc107;
   box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+  outline: none;
 }
 .contact-page .btn-warning {
   background-color: #ffc107;
   border: none;
+  transition: 0.3s;
 }
 .contact-page .btn-warning:hover {
   background-color: rgb(211, 158.25, 0);
@@ -418,9 +426,10 @@ body {
   background: white;
   border-radius: 12px;
   padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: none;
   border-right: 5px solid #ffc107;
   margin-bottom: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .btn-submit {
@@ -429,6 +438,8 @@ body {
   border-radius: 8px;
   padding: 10px 25px;
   transition: 0.3s;
+  border: none;
+  cursor: pointer;
 }
 .btn-submit:hover {
   background-color: #ffc107;
@@ -445,18 +456,28 @@ body {
   right: -20px;
   background: #ffc107;
   color: #000;
-  padding: 15px 25px;
+  background: white;
   border-radius: 12px;
+  padding: 15px 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: none;
   font-weight: bold;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 .about-page .feature-card {
-  background: #fff;
+  background: white;
+  border-radius: 0;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: none;
+  background: white;
   border: 1px solid #eee;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 .about-page .feature-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-10px) scale(1);
+}
+.about-page .feature-card:hover {
   border-color: #ffc107;
 }
 .about-page .feature-card .icon-box i {

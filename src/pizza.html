@@ -13,49 +13,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <style>
-      :root {
-        --main-color: #ffc107;
-        --text-gray: #6c757d;
-      }
-      body {
-        background-color: #fcfcfc;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
-      .product-img {
-        max-height: 450px;
-        object-fit: cover;
-        border-radius: 20px;
-      }
-      .star-rating {
-        font-size: 1.5rem;
-        color: #ddd;
-        cursor: pointer;
-        display: inline-block;
-      }
-      .star-rating .fa-star.active {
-        color: var(--main-color);
-      }
-      .comment-card {
-        background: white;
-        border-radius: 12px;
-        padding: 15px;
-        border-right: 5px solid var(--main-color);
-        margin-bottom: 15px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-      }
-      .btn-submit {
-        background-color: #333;
-        color: white;
-        border-radius: 8px;
-        padding: 10px 25px;
-        transition: 0.3s;
-      }
-      .btn-submit:hover {
-        background-color: var(--main-color);
-        color: #333;
-      }
-    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
@@ -137,78 +94,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        // 1. استخراج البيانات من الرابط وتحديث العناصر
-        const urlParams = new URLSearchParams(window.location.search);
-        const pName = urlParams.get("name") || "بيتزا شهية";
-        const pPrice = urlParams.get("price") || "0.00";
-        const pImg = urlParams.get("img");
-
-        const nameDisplay = document.getElementById("display-name");
-        const breadcrumbDisplay = document.getElementById("breadcrumb-name");
-        const priceDisplay = document.getElementById("display-price");
-        const imageDisplay = document.getElementById("display-img");
-
-        if (nameDisplay) nameDisplay.innerText = pName;
-        if (breadcrumbDisplay) breadcrumbDisplay.innerText = pName;
-        if (priceDisplay) priceDisplay.innerText = "$" + pPrice;
-
-        // تحديث الصورة بناءً على مسارات Webpack
-        if (pImg && imageDisplay) {
-          let folder = pImg.startsWith("product") ? "products" : "slide-images";
-          imageDisplay.src = `assets/images/${folder}/${pImg}`;
-        }
-
-        // 2. منطق النجوم
-        let selectedRating = 0;
-        const stars = document.querySelectorAll("#star-input i");
-
-        stars.forEach((star) => {
-          star.addEventListener("click", () => {
-            selectedRating = star.getAttribute("data-value");
-            updateStarsDisplay(selectedRating);
-          });
-        });
-
-        function updateStarsDisplay(rating) {
-          stars.forEach((s) => {
-            s.classList.toggle("active", s.getAttribute("data-value") <= rating);
-          });
-        }
-
-        // 3. وظيفة التعليقات
-        window.postComment = function() {
-          const commentInput = document.getElementById("user-comment");
-          const commentText = commentInput.value;
-          const container = document.getElementById("comments-container");
-
-          if (selectedRating === 0) { alert("يرجى اختيار تقييم بالنجوم أولاً!"); return; }
-          if (commentText.trim() === "") { alert("يرجى كتابة تعليق!"); return; }
-
-          if (container.querySelector(".text-muted")) { container.innerHTML = ""; }
-
-          let starHtml = "";
-          for (let i = 1; i <= 5; i++) {
-            starHtml += `<i class="fa-solid fa-star ${i <= selectedRating ? "text-warning" : "text-secondary"}" style="font-size: 0.8rem;"></i>`;
-          }
-
-          const newComment = `
-            <div class="comment-card shadow-sm mb-3 p-3 bg-white rounded-3 animate__animated animate__fadeIn">
-              <div class="d-flex justify-content-between align-items-start mb-2">
-                <h6 class="fw-bold mb-0">مستخدم جديد</h6>
-                <div class="stars">${starHtml}</div>
-              </div>
-              <p class="text-muted mb-0 small">${commentText}</p>
-            </div>`;
-
-          container.insertAdjacentHTML("afterbegin", newComment);
-          commentInput.value = "";
-          selectedRating = 0;
-          updateStarsDisplay(0);
-        };
-      });
-    </script>
   </body>
 </html>

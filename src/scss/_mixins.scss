@@ -1,0 +1,47 @@
+@mixin hover-lift($translateY: -5px, $scale: 1) {
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY($translateY) scale($scale);
+  }
+}
+
+@mixin card-base($radius: 12px, $padding: 15px) {
+  background: $white-color;
+  border-radius: $radius;
+  padding: $padding;
+  box-shadow: 0 2px 5px $shadow-light;
+  border: none;
+}
+
+@mixin btn-style($bg: $gray-color, $color: $white-color, $radius: 8px) {
+  background-color: $bg;
+  color: $color;
+  border-radius: $radius;
+  padding: 10px 25px;
+  transition: 0.3s;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: $yellow-color;
+    color: $gray-color;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin input-base {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: 0.3s;
+  &:focus {
+    border-color: $yellow-color;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    outline: none;
+  }
+}

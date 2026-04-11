@@ -18,14 +18,14 @@ body {
   .fa-star {
     transition: color 0.2s ease;
     &.active {
-      color: $main-color;
+      color: $yellow-color;
     }
   }
 }
 
 .comment-card {
   @include card-base; 
-  border-right: 5px solid $main-color;
+  border-right: 5px solid $yellow-color;
   margin-bottom: 15px;
 }
 

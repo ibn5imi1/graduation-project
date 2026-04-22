@@ -1,42 +1,35 @@
-.about-page {
-  .about-hero {
-    background: linear-gradient(rgba($black-color, 0.6), rgba($black-color, 0.6)), 
-                url('../assets/images/products/product-1-1.jpg') center/cover;
-    height: 300px;
-  }
+body {
+  background-color: $bg-body;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
-  .about-img-box {
-    .experience-badge {
-      position: absolute;
-      bottom: -20px;
-      right: -20px;
-      background: $yellow-color;
-      color: $black-color;
-      
-      @include card-base(12px, 15px 25px);
-      
-      font-weight: bold;
-      box-shadow: 0 10px 20px rgba($black-color, 0.1);
-    }
-  }
+.product-img {
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 20px;
+}
 
-  .feature-card {
-    @include card-base(0, 20px); 
-    background: $white-color;
-    border: 1px solid #eee;
-    
-    @include hover-lift(-10px);
+.star-rating {
+  font-size: 1.5rem;
+  color: #ddd;
+  cursor: pointer;
+  display: inline-block;
 
-    &:hover {
-      border-color: $yellow-color;
-    }
-
-    .icon-box i {
+  .fa-star {
+    transition: color 0.2s ease;
+    &.active {
       color: $yellow-color;
     }
   }
+}
 
-  .stats-section {
-    border-top: 5px solid $yellow-color;
-  }
+.comment-card {
+  @include card-base; 
+  border-right: 5px solid $yellow-color;
+  margin-bottom: 15px;
+}
+
+.btn-submit {
+  @include btn-style($gray-color, $white-color, 8px);
+
 }

@@ -2,7 +2,11 @@
   transition: all 0.3s ease;
   &:hover {
     transform: translateY($translateY) scale($scale);
-  }
+    -webkit-transform: translateY($translateY) scale($scale);
+    -moz-transform: translateY($translateY) scale($scale);
+    -ms-transform: translateY($translateY) scale($scale);
+    -o-transform: translateY($translateY) scale($scale);
+}
 }
 
 @mixin card-base($radius: 12px, $padding: 15px) {

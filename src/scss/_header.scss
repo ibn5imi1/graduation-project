@@ -1,56 +1,90 @@
 .navbar {
-  padding: 0.5rem 0;  
-  min-height: 70px;  
+  padding: 0.5rem 0;
+  min-height: 70px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+
+  .navbar-brand {
+    font-weight: 800;
+    color: $gray-color;
+    transition: color 0.3s;
+    &:hover {
+      color: $yellow-color;
+    }
+  }
 
   .nav-item {
     position: relative;
-    margin: 0 10px;
+    margin: 0 5px;
 
     .nav-link {
-      color: $gray-color !important; 
+      color: $gray-color !important;
       font-weight: 600;
       transition: all 0.3s ease;
-      display: inline-block; 
+      padding: 8px 15px !important;
 
       &::after {
         content: "";
         position: absolute;
-        bottom: 0;
+        bottom: 5px;
         left: 50%;
         width: 0;
         height: 3px;
         background-color: $yellow-color;
+        border-radius: 2px;
         transition: all 0.3s ease;
         transform: translateX(-50%);
       }
 
-      &:hover {
+      &:hover, &.active {
         color: $yellow-color !important;
         &::after {
-          width: 100%;
-        }
-      }
-
-      &.active {
-        color: $yellow-color !important;
-        &::after {
-          width: 100%;
+          width: 70%;
         }
       }
     }
   }
 
   .navbar-logo {
+    margin-right: 12px;
     img {
       height: 50px;
       width: auto;
       display: block;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.1) rotate(5deg); // حركة خفيفة عند تمرير الماوس
+      }
     }
   }
 }
 
+
 @media (max-width: 991px) {
-  .navbar-logo {
-    display: none; 
+  .navbar {
+    .navbar-logo {
+      display: block;
+      img {
+        height: 40px; 
+      }
+    }
+
+    .navbar-collapse {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 15px;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+
+      .nav-item {
+        margin: 10px 0;
+        text-align: center;
+        
+        .nav-link::after {
+          display: none;   
+        }
+      }
+    }
   }
 }

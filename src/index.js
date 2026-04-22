@@ -152,7 +152,7 @@ window.removeItem = (index) => {
     let cart = JSON.parse(localStorage.getItem('pizzaCart')) || [];
     cart.splice(index, 1);
     localStorage.setItem('pizzaCart', JSON.stringify(cart));
-    displayCart(); 
+    displayCart();
 };
 
 // Request Submission Function
@@ -203,7 +203,7 @@ function sendOrder() {
 
 // 1. Extracting data from the URL (URL Parameters)
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Extracting data from the URL (URL Parameters)
+    // Extracting data from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const pName = urlParams.get("name") || "بيتزا شهية";
     const pPrice = urlParams.get("price") || "0.00";
@@ -213,16 +213,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const breadcrumbDisplay = document.getElementById("breadcrumb-name");
     const priceDisplay = document.getElementById("display-price");
     const imageDisplay = document.getElementById("display-img");
+    const container = document.getElementById("comments-container");
 
     if (nameDisplay) nameDisplay.innerText = pName;
     if (breadcrumbDisplay) breadcrumbDisplay.innerText = pName;
     if (priceDisplay) priceDisplay.innerText = "$" + pPrice;
 
-    // Image updated based on project paths
     if (pImg && imageDisplay) {
         let folder = pImg.startsWith("product") ? "products" : "slide-images";
         imageDisplay.src = `assets/images/${folder}/${pImg}`;
     }
+
+    // New Comment: Load all stored comments on startup
+    loadComments();
 
     // 2. The logic of star ratings
     let selectedRating = 0;
@@ -245,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.postComment = function () {
         const commentInput = document.getElementById("user-comment");
         const commentText = commentInput.value;
-        const container = document.getElementById("comments-container");
 
         if (selectedRating === 0) {
             alert("يرجى اختيار تقييم بالنجوم أولاً!");
@@ -256,30 +258,92 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Delete the "No comments" message if found
-        if (container.querySelector(".text-muted")) {
-            container.innerHTML = "";
-        }
+        // New Comment: Create a unique ID for each comment to handle deletion
+        const commentData = {
+            id: Date.now(), // Unique ID based on timestamp
+            productName: pName,
+            rating: selectedRating,
+            text: commentText,
+            timestamp: new Date().toLocaleString('ar-EG')
+        };
 
-        let starHtml = "";
-        for (let i = 1; i <= 5; i++) {
-            starHtml += `<i class="fa-solid fa-star ${i <= selectedRating ? "text-warning" : "text-secondary"}" style="font-size: 0.8rem;"></i>`;
-        }
+        // New Comment: Save and then reload all comments to ensure UI consistency
+        saveCommentToLocal(commentData);
+        loadComments();
 
-        const newComment = `
-            <div class="comment-card shadow-sm mb-3 p-3 bg-white rounded-3 animate__animated animate__fadeIn">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <h6 class="fw-bold mb-0">مستخدم جديد</h6>
-                    <div class="stars">${starHtml}</div>
-                </div>
-                <p class="text-muted mb-0 small">${commentText}</p>
-            </div>`;
-
-        container.insertAdjacentHTML("afterbegin", newComment);
-
-        // Reformatting fields
+        // Reset fields
         commentInput.value = "";
         selectedRating = 0;
         updateStarsDisplay(0);
     };
+
+    // New Comment: Save comment without overwriting the previous ones
+    function saveCommentToLocal(comment) {
+        const comments = JSON.parse(localStorage.getItem("pizza_comments") || "[]");
+        comments.push(comment); // Append the new comment to the array
+        localStorage.setItem("pizza_comments", JSON.stringify(comments));
+    }
+
+    // New Comment: Function to delete a specific comment by ID
+    window.deleteComment = function (id) {
+        let comments = JSON.parse(localStorage.getItem("pizza_comments") || "[]");
+        // Filter out the comment that matches the ID
+        comments = comments.filter(c => c.id !== id);
+        localStorage.setItem("pizza_comments", JSON.stringify(comments));
+        loadComments(); // Refresh the list
+    };
+
+    // New Comment: Completely refresh the comments UI
+    function loadComments() {
+        const comments = JSON.parse(localStorage.getItem("pizza_comments") || "[]");
+        const filteredComments = comments.filter(c => c.productName === pName);
+
+        // Clear container once before starting the loop
+        container.innerHTML = "";
+
+        if (filteredComments.length === 0) {
+            container.innerHTML = '<div class="text-muted small">لا توجد تعليقات بعد، كن أول من يعلق!</div>';
+            return;
+        }
+
+        // Render each comment from the filtered list
+        filteredComments.forEach(c => renderComment(c));
+    }
+
+    // New Comment: UI Rendering for a single comment with a delete button on the same row as stars
+    function renderComment(data) {
+        let starHtml = "";
+        for (let i = 1; i <= 5; i++) {
+            starHtml += `<i class="fa-solid fa-star ${i <= data.rating ? "text-warning" : "text-secondary"}" style="font-size: 1.2rem;"></i>`;
+        }
+
+        const fullTimestamp = data.timestamp.split(' ');
+        const datePart = fullTimestamp[0];
+        const timePart = fullTimestamp.slice(1).join(' ');
+
+        const newComment = `
+            <div class="comment-card shadow-sm mb-4 p-3 bg-white rounded-3 border-start border-warning border-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h6 class="fw-bold mb-1" style="font-size: 1.1rem;">مستخدم جديد</h6>
+                        <div class="text-muted" style="font-size: 0.85rem;">
+                            <span>${datePart}</span> 
+                            <span class="fw-bold ms-1" style="color: #555;">(${timePart})</span>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="stars">${starHtml}</div>
+                        <button onclick="deleteComment(${data.id})" class="btn btn-sm text-danger p-1" title="حذف">
+                            <i class="fa-solid fa-trash-can fa-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="mb-0 text-dark" style="font-size: 1.1rem; line-height: 1.6; border-top: 1px solid #f1f1f1; padding-top: 10px;">
+                    ${data.text}
+                </p>
+            </div>`;
+
+        container.insertAdjacentHTML("afterbegin", newComment);
+    }
 });

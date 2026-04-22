@@ -15,26 +15,51 @@
     />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+    <!-- start header -->
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top"
+    >
       <div class="container">
-        <a class="navbar-brand" href="index.html">بيتزا دي روما</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <div class="d-flex align-items-center">
+          <a class="navbar-brand" href="index.html">بيتزا دي روما</a>
+          <div class="navbar-logo">
+            <img src="../src/assets/images/logo.png" alt="Logo" />
+          </div>
+        </div>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 p-0">
-            <li class="nav-item"><a class="nav-link" href="index.html">الرئيسية</a></li>
-            <li class="nav-item"><a class="nav-link" href="order.html">طلبك</a></li>
-            <li class="nav-item"><a class="nav-link" href="about.html">حول المطعم</a></li>
-            <li class="nav-item"><a class="nav-link" href="contactUs.html">اتصل بنا</a></li>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 p-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.html"
+                >الرئيسية</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="order.html">طلبك</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">حول المطعم</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contactUs.html">اتصل بنا</a>
+            </li>
           </ul>
-          <div class="navbar-logo">
-            <img src="../src/assets/images/logo.png" alt="Logo" width="40" />
-          </div>
         </div>
       </div>
     </nav>
+    <!-- end header -->
 
     <div class="container py-5">
       <div class="row g-5 align-items-center">
@@ -65,12 +90,7 @@
       <hr class="my-5" />
 
       <div class="row">
-        <div class="col-lg-7">
-          <h3 class="mb-4 fw-bold text-dark">آراء العملاء</h3>
-          <div id="comments-container">
-            <div class="text-muted small">لا توجد تعليقات بعد، كن أول من يعلق!</div>
-          </div>
-        </div>
+        
 
         <div class="col-lg-5">
           <div class="card border-0 shadow-sm p-4 rounded-4">
@@ -90,6 +110,13 @@
               <textarea id="user-comment" class="form-control" rows="4" placeholder="اكتب رأيك في هذا المنتج..."></textarea>
             </div>
             <button onclick="postComment()" class="btn btn-submit w-100 fw-bold">نشر التعليق</button>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <h3 class="mb-4 fw-bold text-dark">آراء العملاء</h3>
+          <div id="comments-container">
+            <div class="text-muted small">لا توجد تعليقات بعد، كن أول من يعلق!</div>
           </div>
         </div>
       </div>

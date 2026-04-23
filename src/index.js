@@ -201,187 +201,136 @@ function sendOrder() {
 })()
 
 
-// 1. Extracting data from the URL (URL Parameters)
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Extract data from the URL
+// use jquery To write a comment and rating, and to visit the pizza page
+import $ from 'jquery';
+window.jQuery = window.$ = $;
+
+$(document).ready(function () {
+    // 1. Extracting data from a URL
     const urlParams = new URLSearchParams(window.location.search);
     const pName = urlParams.get("name") || "بيتزا شهية";
     const pPrice = urlParams.get("price") || "0.00";
     const pImg = urlParams.get("img");
 
-    // 2. Theme Assignment Logic (Dynamic Background)
-    // Clear any previous theme classes first
-    document.body.className = "";
-
+    // 2. Theme Logic
+    $('body').removeClass();
     let themeClass = 'theme-default';
+
     if (pName.includes("مارجريتا") || pName.includes("الرانش")) themeClass = 'theme-margherita';
     else if (pName.includes("ببروني") || pName.includes("الفصول الاربعة")) themeClass = 'theme-pepperoni';
     else if (pName.includes("خضار") || pName.includes("أعشاب") || pName.includes("فطر")) themeClass = 'theme-veggie';
     else if (pName.includes("تشيز") || pName.includes("جبن")) themeClass = 'theme-cheese';
     else if (pName.includes("ثمار البحر") || pName.includes("الدجاج")) themeClass = 'theme-seafood';
 
-    // Apply the selected class to body
-    document.body.classList.add(themeClass);
+    $('body').addClass(themeClass);
 
-    // 3. UI Updates
-    const nameDisplay = document.getElementById("display-name");
-    const breadcrumbDisplay = document.getElementById("breadcrumb-name");
-    const priceDisplay = document.getElementById("display-price");
-    const imageDisplay = document.getElementById("display-img");
-    const container = document.getElementById("comments-container");
+    // 3. User interface update
+    $("#display-name, #breadcrumb-name").text(pName);
+    $("#display-price").text("$" + pPrice);
 
-    if (nameDisplay) nameDisplay.innerText = pName;
-    if (breadcrumbDisplay) breadcrumbDisplay.innerText = pName;
-    if (priceDisplay) priceDisplay.innerText = "$" + pPrice;
-
-    // --- Optimized Image Loading Logic ---
-    if (pImg && imageDisplay) {
-        let folder = "";
-
-        // 1. Logic to detect the folder based on file name
-        if (pImg.includes("product")) {
-            folder = "products";
-        } else if (pImg.includes("slider") || pImg.includes("slide")) {
-            folder = "slide-images";
-        }
-
-        // 2. Try to set the source
-        // Check if your folder structure is: src/assets/images/...
+    if (pImg) {
+        let folder = pImg.includes("product") ? "products" : "slide-images";
         const fullPath = `../src/assets/images/${folder}/${pImg}`;
-        imageDisplay.src = fullPath;
+        const fallbackPath = `../assets/images/${folder}/${pImg}`;
 
-        // 3. Emergency Log (F12) - This will tell us exactly what happened
-        imageDisplay.onerror = function () {
-            console.error("FAILED TO LOAD IMAGE AT: " + fullPath);
-            console.log("Check if the file exists exactly here: src/assets/images/" + folder + "/" + pImg);
-
-            // Try fallback: maybe assets is not inside src?
-            if (fullPath.includes("../src/")) {
-                const fallbackPath = `../assets/images/${folder}/${pImg}`;
-                console.log("Trying fallback path: " + fallbackPath);
-                imageDisplay.src = fallbackPath;
-            }
-        };
+        $("#display-img").attr("src", fullPath).on('error', function () {
+            $(this).attr("src", fallbackPath);
+        });
     }
 
-    // Load comments and start star logic (Your existing code below)
-    loadComments();
-
+    // 4. Star Rating Logic
     let selectedRating = 0;
-    const stars = document.querySelectorAll("#star-input i");
-    stars.forEach((star) => {
-        star.addEventListener("click", () => {
-            selectedRating = star.getAttribute("data-value");
-            updateStarsDisplay(selectedRating);
-        });
+    $("#star-input i").on("click", function () {
+        selectedRating = $(this).data("value");
+        updateStarsDisplay(selectedRating);
     });
 
     function updateStarsDisplay(rating) {
-        stars.forEach((s) => {
-            s.classList.toggle("active", s.getAttribute("data-value") <= rating);
+        $("#star-input i").each(function () {
+            const val = $(this).data("value");
+            $(this).toggleClass("active", val <= rating);
+            $(this).css("color", val <= rating ? "#ffc107" : "#ccc");
         });
     }
 
-    // 3. Comment posting function
-    window.postComment = function () {
-        const commentInput = document.getElementById("user-comment");
-        const commentText = commentInput.value;
+    // 5. Comments Logic
+    function loadComments() {
+        const comments = JSON.parse(localStorage.getItem("pizza_comments") || "[]");
+        const filteredComments = comments.filter(c => c.productName === pName);
+        const $container = $("#comments-container");
 
-        if (selectedRating === 0) {
-            alert("يرجى اختيار تقييم بالنجوم أولاً!");
+        $container.empty();
+
+        if (filteredComments.length === 0) {
+            $container.append('<div class="text-muted small">لا توجد تعليقات بعد، كن أول من يعلق!</div>');
             return;
         }
-        if (commentText.trim() === "") {
-            alert("يرجى كتابة تعليق!");
-            return;
+
+        filteredComments.forEach(c => renderComment(c));
+    }
+
+    function renderComment(data) {
+        let starHtml = "";
+        for (let i = 1; i <= 5; i++) {
+            starHtml += `<i class="fa-solid fa-star ${i <= data.rating ? "text-warning" : "text-secondary"}"></i>`;
         }
 
-        // New Comment: Create a unique ID for each comment to handle deletion
+        const [datePart, ...timeParts] = data.timestamp.split(' ');
+        const timePart = timeParts.join(' ');
+
+        const commentHtml = `
+            <div class="comment-card shadow-sm mb-4 p-3 bg-white rounded-3 border-start border-warning border-4" style="display:none;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h6 class="fw-bold mb-1">مستخدم جديد</h6>
+                        <small class="text-muted">${datePart} <span class="fw-bold">(${timePart})</span></small>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="stars">${starHtml}</div>
+                        <button class="btn btn-sm text-danger delete-btn" data-id="${data.id}"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                </div>
+                <p class="mb-0 pt-2 border-top">${data.text}</p>
+            </div>`;
+
+        const $newComment = $(commentHtml);
+        $("#comments-container").prepend($newComment);
+        $newComment.fadeIn(500);
+    }
+
+    $("#btn-post-comment").on("click", function () {
+        const commentText = $("#user-comment").val();
+
+        if (selectedRating === 0) return alert("يرجى اختيار تقييم!");
+        if (!commentText.trim()) return alert("يرجى كتابة تعليق!");
+
         const commentData = {
-            id: Date.now(), // Unique ID based on timestamp
+            id: Date.now(),
             productName: pName,
             rating: selectedRating,
             text: commentText,
             timestamp: new Date().toLocaleString('ar-EG')
         };
 
-        // New Comment: Save and then reload all comments to ensure UI consistency
-        saveCommentToLocal(commentData);
-        loadComments();
+        const comments = JSON.parse(localStorage.getItem("pizza_comments") || "[]");
+        comments.push(commentData);
+        localStorage.setItem("pizza_comments", JSON.stringify(comments));
 
-        // Reset fields
-        commentInput.value = "";
+        $("#user-comment").val("");
         selectedRating = 0;
         updateStarsDisplay(0);
-    };
+        loadComments();
+    });
 
-    // New Comment: Save comment without overwriting the previous ones
-    function saveCommentToLocal(comment) {
-        const comments = JSON.parse(localStorage.getItem("pizza_comments") || "[]");
-        comments.push(comment); // Append the new comment to the array
-        localStorage.setItem("pizza_comments", JSON.stringify(comments));
-    }
-
-    // New Comment: Function to delete a specific comment by ID
-    window.deleteComment = function (id) {
+    // Delete comment using Delegation
+    $(document).on("click", ".delete-btn", function () {
+        const id = $(this).data("id");
         let comments = JSON.parse(localStorage.getItem("pizza_comments") || "[]");
-        // Filter out the comment that matches the ID
         comments = comments.filter(c => c.id !== id);
         localStorage.setItem("pizza_comments", JSON.stringify(comments));
-        loadComments(); // Refresh the list
-    };
+        $(this).closest('.comment-card').fadeOut(400, loadComments);
+    });
 
-    // New Comment: Completely refresh the comments UI
-    function loadComments() {
-        const comments = JSON.parse(localStorage.getItem("pizza_comments") || "[]");
-        const filteredComments = comments.filter(c => c.productName === pName);
-
-        // Clear container once before starting the loop
-        container.innerHTML = "";
-
-        if (filteredComments.length === 0) {
-            container.innerHTML = '<div class="text-muted small">لا توجد تعليقات بعد، كن أول من يعلق!</div>';
-            return;
-        }
-
-        // Render each comment from the filtered list
-        filteredComments.forEach(c => renderComment(c));
-    }
-
-    // New Comment: UI Rendering for a single comment with a delete button on the same row as stars
-    function renderComment(data) {
-        let starHtml = "";
-        for (let i = 1; i <= 5; i++) {
-            starHtml += `<i class="fa-solid fa-star ${i <= data.rating ? "text-warning" : "text-secondary"}" style="font-size: 1.2rem;"></i>`;
-        }
-
-        const fullTimestamp = data.timestamp.split(' ');
-        const datePart = fullTimestamp[0];
-        const timePart = fullTimestamp.slice(1).join(' ');
-
-        const newComment = `
-            <div class="comment-card shadow-sm mb-4 p-3 bg-white rounded-3 border-start border-warning border-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div>
-                        <h6 class="fw-bold mb-1" style="font-size: 1.1rem;">مستخدم جديد</h6>
-                        <div class="text-muted" style="font-size: 0.85rem;">
-                            <span>${datePart}</span> 
-                            <span class="fw-bold ms-1" style="color: #555;">(${timePart})</span>
-                        </div>
-                    </div>
-                    
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="stars">${starHtml}</div>
-                        <button onclick="deleteComment(${data.id})" class="btn btn-sm text-danger p-1" title="حذف">
-                            <i class="fa-solid fa-trash-can fa-lg"></i>
-                        </button>
-                    </div>
-                </div>
-                <p class="mb-0 text-dark" style="font-size: 1.1rem; line-height: 1.6; border-top: 1px solid #f1f1f1; padding-top: 10px;">
-                    ${data.text}
-                </p>
-            </div>`;
-
-        container.insertAdjacentHTML("afterbegin", newComment);
-    }
+    // Initial loading operation
+    loadComments();
 });

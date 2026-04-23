@@ -6,7 +6,7 @@
     -moz-transform: translateY($translateY) scale($scale);
     -ms-transform: translateY($translateY) scale($scale);
     -o-transform: translateY($translateY) scale($scale);
-}
+  }
 }
 
 @mixin card-base($radius: 12px, $padding: 15px) {
@@ -25,7 +25,7 @@
   transition: 0.3s;
   border: none;
   cursor: pointer;
-  
+
   &:hover {
     background-color: $yellow-color;
     color: $gray-color;
@@ -50,10 +50,9 @@
   }
 }
 
-
 // New Mixin for dynamic themes
 @mixin pizza-theme($bg-color) {
-   background-color: $bg-color !important;
+  background-color: $bg-color !important;
   min-height: 100vh;
   transition: background-color 0.5s ease;
 }

@@ -3,11 +3,29 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+// Theme Classes applied via JavaScript
+.theme-margherita {
+  @include pizza-theme($bg-margherita);
+}
+.theme-pepperoni {
+  @include pizza-theme($bg-pepperoni);
+}
+.theme-veggie {
+  @include pizza-theme($bg-veggie);
+}
+.theme-cheese {
+  @include pizza-theme($bg-cheese);
+}
+.theme-seafood {
+  @include pizza-theme($bg-seafood);
+}
+
 .product-img {
   max-height: 450px;
   object-fit: cover;
   border-radius: 20px;
 }
+
 
 .star-rating {
   font-size: 1.5rem;
@@ -24,12 +42,11 @@ body {
 }
 
 .comment-card {
-  @include card-base; 
+  @include card-base;
   border-right: 5px solid $yellow-color;
   margin-bottom: 15px;
 }
 
 .btn-submit {
   @include btn-style($gray-color, $white-color, 8px);
-
 }

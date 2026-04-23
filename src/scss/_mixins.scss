@@ -49,3 +49,11 @@
     outline: none;
   }
 }
+
+
+// New Mixin for dynamic themes
+@mixin pizza-theme($bg-color) {
+   background-color: $bg-color !important;
+  min-height: 100vh;
+  transition: background-color 0.5s ease;
+}

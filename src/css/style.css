@@ -2,48 +2,77 @@
 .navbar {
   padding: 0.5rem 0;
   min-height: 70px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(5px);
+}
+.navbar .navbar-brand {
+  font-weight: 800;
+  color: #333;
+  transition: color 0.3s;
+}
+.navbar .navbar-brand:hover {
+  color: #ffc107;
 }
 .navbar .nav-item {
   position: relative;
-  margin: 0 10px;
+  margin: 0 5px;
 }
 .navbar .nav-item .nav-link {
   color: #333 !important;
   font-weight: 600;
   transition: all 0.3s ease;
-  display: inline-block;
+  padding: 8px 15px !important;
 }
 .navbar .nav-item .nav-link::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: 5px;
   left: 50%;
   width: 0;
   height: 3px;
   background-color: #ffc107;
+  border-radius: 2px;
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
-.navbar .nav-item .nav-link:hover {
+.navbar .nav-item .nav-link:hover, .navbar .nav-item .nav-link.active {
   color: #ffc107 !important;
 }
-.navbar .nav-item .nav-link:hover::after {
-  width: 100%;
+.navbar .nav-item .nav-link:hover::after, .navbar .nav-item .nav-link.active::after {
+  width: 70%;
 }
-.navbar .nav-item .nav-link.active {
-  color: #ffc107 !important;
-}
-.navbar .nav-item .nav-link.active::after {
-  width: 100%;
+.navbar .navbar-logo {
+  margin-right: 12px;
 }
 .navbar .navbar-logo img {
   height: 50px;
   width: auto;
   display: block;
+  transition: transform 0.3s ease;
+}
+.navbar .navbar-logo img:hover {
+  transform: scale(1.1) rotate(5deg);
 }
 
 @media (max-width: 991px) {
-  .navbar-logo {
+  .navbar .navbar-logo {
+    display: block;
+  }
+  .navbar .navbar-logo img {
+    height: 40px;
+  }
+  .navbar .navbar-collapse {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  .navbar .navbar-collapse .nav-item {
+    margin: 10px 0;
+    text-align: center;
+  }
+  .navbar .navbar-collapse .nav-item .nav-link::after {
     display: none;
   }
 }
@@ -92,6 +121,10 @@
 }
 .main-footer .social-links .social-icon:hover {
   transform: translateY(-3px) scale(1);
+  -webkit-transform: translateY(-3px) scale(1);
+  -moz-transform: translateY(-3px) scale(1);
+  -ms-transform: translateY(-3px) scale(1);
+  -o-transform: translateY(-3px) scale(1);
 }
 .main-footer .social-links .social-icon:hover {
   background-color: #ffc107;
@@ -304,7 +337,7 @@
   border-radius: 8px;
   font-weight: 800;
   font-size: 0.9rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 .menu-page .menu-item-card .menu-item-info {
   padding: 15px 5px 5px;
@@ -373,6 +406,10 @@
 }
 .contact-page .contact-info-card:hover, .contact-page .contact-form-card:hover {
   transform: translateY(-5px) scale(1);
+  -webkit-transform: translateY(-5px) scale(1);
+  -moz-transform: translateY(-5px) scale(1);
+  -ms-transform: translateY(-5px) scale(1);
+  -o-transform: translateY(-5px) scale(1);
 }
 .contact-page .contact-info-card h4, .contact-page .contact-form-card h4 {
   color: #222;
@@ -398,9 +435,84 @@
   background-color: rgb(211, 158.25, 0);
 }
 
+.about-page .about-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("../assets/images/products/product-1-1.jpg") center/cover;
+  height: 300px;
+}
+.about-page .about-img-box .experience-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: #ffc107;
+  color: #000;
+  background: white;
+  border-radius: 12px;
+  padding: 15px 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: none;
+  font-weight: bold;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.about-page .feature-card {
+  background: white;
+  border-radius: 0;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: none;
+  background: white;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+.about-page .feature-card:hover {
+  transform: translateY(-10px) scale(1);
+  -webkit-transform: translateY(-10px) scale(1);
+  -moz-transform: translateY(-10px) scale(1);
+  -ms-transform: translateY(-10px) scale(1);
+  -o-transform: translateY(-10px) scale(1);
+}
+.about-page .feature-card:hover {
+  border-color: #ffc107;
+}
+.about-page .feature-card .icon-box i {
+  color: #ffc107;
+}
+.about-page .stats-section {
+  border-top: 5px solid #ffc107;
+}
+
 body {
   background-color: #fcfcfc;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.theme-margherita {
+  background-color: #f65014 !important;
+  min-height: 100vh;
+  transition: background-color 0.5s ease;
+}
+
+.theme-pepperoni {
+  background-color: #fca015 !important;
+  min-height: 100vh;
+  transition: background-color 0.5s ease;
+}
+
+.theme-veggie {
+  background-color: #23ef59 !important;
+  min-height: 100vh;
+  transition: background-color 0.5s ease;
+}
+
+.theme-cheese {
+  background-color: #ffdd00 !important;
+  min-height: 100vh;
+  transition: background-color 0.5s ease;
+}
+
+.theme-seafood {
+  background-color: #258feb !important;
+  min-height: 100vh;
+  transition: background-color 0.5s ease;
 }
 
 .product-img {
@@ -444,47 +556,6 @@ body {
 .btn-submit:hover {
   background-color: #ffc107;
   color: #333;
-}
-
-.about-page .about-hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("../assets/images/products/product-1-1.jpg") center/cover;
-  height: 300px;
-}
-.about-page .about-img-box .experience-badge {
-  position: absolute;
-  bottom: -20px;
-  right: -20px;
-  background: #ffc107;
-  color: #000;
-  background: white;
-  border-radius: 12px;
-  padding: 15px 25px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  border: none;
-  font-weight: bold;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-.about-page .feature-card {
-  background: white;
-  border-radius: 0;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  border: none;
-  background: white;
-  border: 1px solid #eee;
-  transition: all 0.3s ease;
-}
-.about-page .feature-card:hover {
-  transform: translateY(-10px) scale(1);
-}
-.about-page .feature-card:hover {
-  border-color: #ffc107;
-}
-.about-page .feature-card .icon-box i {
-  color: #ffc107;
-}
-.about-page .stats-section {
-  border-top: 5px solid #ffc107;
 }
 
 * {

@@ -203,12 +203,27 @@ function sendOrder() {
 
 // 1. Extracting data from the URL (URL Parameters)
 document.addEventListener('DOMContentLoaded', () => {
-    // Extracting data from the URL
+    // 1. Extract data from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const pName = urlParams.get("name") || "بيتزا شهية";
     const pPrice = urlParams.get("price") || "0.00";
     const pImg = urlParams.get("img");
 
+    // 2. Theme Assignment Logic (Dynamic Background)
+    // Clear any previous theme classes first
+    document.body.className = "";
+
+    let themeClass = 'theme-default';
+    if (pName.includes("مارجريتا") || pName.includes("الرانش")) themeClass = 'theme-margherita';
+    else if (pName.includes("ببروني") || pName.includes("الفصول الاربعة")) themeClass = 'theme-pepperoni';
+    else if (pName.includes("خضار") || pName.includes("أعشاب") || pName.includes("فطر")) themeClass = 'theme-veggie';
+    else if (pName.includes("تشيز") || pName.includes("جبن")) themeClass = 'theme-cheese';
+    else if (pName.includes("ثمار البحر") || pName.includes("الدجاج")) themeClass = 'theme-seafood';
+
+    // Apply the selected class to body
+    document.body.classList.add(themeClass);
+
+    // 3. UI Updates
     const nameDisplay = document.getElementById("display-name");
     const breadcrumbDisplay = document.getElementById("breadcrumb-name");
     const priceDisplay = document.getElementById("display-price");
@@ -219,18 +234,41 @@ document.addEventListener('DOMContentLoaded', () => {
     if (breadcrumbDisplay) breadcrumbDisplay.innerText = pName;
     if (priceDisplay) priceDisplay.innerText = "$" + pPrice;
 
+    // --- Optimized Image Loading Logic ---
     if (pImg && imageDisplay) {
-        let folder = pImg.startsWith("product") ? "products" : "slide-images";
-        imageDisplay.src = `assets/images/${folder}/${pImg}`;
+        let folder = "";
+
+        // 1. Logic to detect the folder based on file name
+        if (pImg.includes("product")) {
+            folder = "products";
+        } else if (pImg.includes("slider") || pImg.includes("slide")) {
+            folder = "slide-images";
+        }
+
+        // 2. Try to set the source
+        // Check if your folder structure is: src/assets/images/...
+        const fullPath = `../src/assets/images/${folder}/${pImg}`;
+        imageDisplay.src = fullPath;
+
+        // 3. Emergency Log (F12) - This will tell us exactly what happened
+        imageDisplay.onerror = function () {
+            console.error("FAILED TO LOAD IMAGE AT: " + fullPath);
+            console.log("Check if the file exists exactly here: src/assets/images/" + folder + "/" + pImg);
+
+            // Try fallback: maybe assets is not inside src?
+            if (fullPath.includes("../src/")) {
+                const fallbackPath = `../assets/images/${folder}/${pImg}`;
+                console.log("Trying fallback path: " + fallbackPath);
+                imageDisplay.src = fallbackPath;
+            }
+        };
     }
 
-    // New Comment: Load all stored comments on startup
+    // Load comments and start star logic (Your existing code below)
     loadComments();
 
-    // 2. The logic of star ratings
     let selectedRating = 0;
     const stars = document.querySelectorAll("#star-input i");
-
     stars.forEach((star) => {
         star.addEventListener("click", () => {
             selectedRating = star.getAttribute("data-value");
